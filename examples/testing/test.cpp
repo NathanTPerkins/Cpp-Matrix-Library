@@ -1,7 +1,9 @@
-#include <Matrix.hpp>
+#include <Matrix.h>
+#include <Vector.h>
 #include <iostream>
 int main(){
-    matrix::matrix2d_t<int, 2,2> m;
+    matrix::vector_t<int, 3> v;
+    
     // std::cout << m;
 
     return 0;
