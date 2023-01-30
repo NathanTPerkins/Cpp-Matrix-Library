@@ -46,4 +46,6 @@ std::ostream& operator << (std::ostream& out, matrix::matrix2d_t<T,w,h>& m);
 
 
 
+
+
 #endif
