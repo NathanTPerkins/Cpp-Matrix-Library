@@ -37,6 +37,7 @@ namespace matrix{
 
     template<typename T, int length>
     vector_t<T, length>::vector_t(){
+        std::cout << "THis is vector" << std::endl;
         this->__length = length;
         this->__arr = (T*)malloc(sizeof(T) * length);
     }
