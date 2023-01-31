@@ -6,7 +6,7 @@ RANLIB = ranlib
 all: test
 
 test.o: test.cpp
-	$(CC) -c $< -I ./src
+	$(CC) -c $< -I ./include
 
 test: test.o
 	$(CC) -o $@ $<
