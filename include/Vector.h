@@ -16,9 +16,11 @@ namespace matrix{
         vector_t(T*);
         ~vector_t();
         vector_t(const vector_t&);
+        vector_t(T&);
 
         int size()const;
         double mag() const;
+        void fill(T&);
         T& dot(const vector_t&) const;
         // vector_t<T, length>& cross(const vector_t&) const; TODO
 
@@ -27,20 +29,24 @@ namespace matrix{
         T& operator[](int& idx)const;
         T& operator[](int&& idx)const;
         void operator=(const vector_t& v);
-        vector_t<T, length>& operator +(const vector_t&);
-        vector_t<T, length>& operator -(const vector_t&);
+        vector_t<T, length>& operator +(const vector_t&)const;
+        vector_t<T, length>& operator -(const vector_t&)const;
+        vector_t<T, length>& operator +(const T&)const;
+        vector_t<T, length>& operator -(const T&)const;
         // vector_t<T, length>& operator /(const vector_t&); TODO
         T& operator *(const vector_t&)const;
 
-
     };
 
+
+    //DEFAULT CONSTRUCTOR
     template<typename T, int length>
     vector_t<T, length>::vector_t(){
         this->__length = length;
         this->__arr = new T[length];
     }
 
+    //ARRAY CONSTRUCTOR
     template<typename T, int length>
     vector_t<T, length>::vector_t(T* v){
         this->__length = length;
@@ -50,11 +56,13 @@ namespace matrix{
         }
     }
 
+    //DESTRUCTOR
     template<typename T, int length>
     vector_t<T, length>::~vector_t(){
         delete[] this->__arr;
     }
 
+    //COPY CONSTRUCTOR
     template<typename T, int length>
     vector_t<T, length>::vector_t(const vector_t& v){
         this->__length = length;
@@ -64,11 +72,23 @@ namespace matrix{
         }
     }
 
+    //FILL CONSTRUCTOR
+    template<typename T, int length>
+    vector_t<T, length>::vector_t(T& num){
+        this->__length = length;
+        this->__arr = new T[length];
+        for(int i = 0; i < length; ++i){
+            this->__arr[i] = num;
+        }
+    }
+
+    //SIZE METHOD
     template<typename T, int length>
     int vector_t<T, length>::size()const{
         return this->__length;
     }
 
+    //MAGNITUDE METHOD
     template<typename T, int length>
     double vector_t<T, length>::mag() const {
         double ins = 0;
@@ -78,29 +98,42 @@ namespace matrix{
         return sqrt(ins);
     }
 
+    //FILL METHOD
+    template<typename T, int length>
+    void vector_t<T, length>::fill(T& num){
+        for(int i = 0; i < length; ++i){
+            this->__arr[i] = num;
+        }
+    }
+
+    //DOT PRODUCT FUNCTION
     template<typename T, int length>
     T& vector_t<T, length>::dot(const vector_t& v)const{
         return (*this) * v;
     }
 
+    //LVALUE ARRAY INDEX OPERATOR
     template<typename T, int length>
     T& vector_t<T, length>::operator[](int& idx)const{
         return this->__arr[idx];
     }
 
+    //RVALUE ARRAY INDEX OPERATOR
     template<typename T, int length>
     T& vector_t<T, length>::operator[](int&& idx)const{
         return this->__arr[idx];
     }
 
+    //ASSIGNMENT OPERATOR
     template<typename T, int length>
     void vector_t<T, length>::operator=(const vector_t& v){
         this->__arr = v.__arr;
         this->__length = v.__length;
     }
 
+    //VECTOR ADDITION
     template<typename T, int length>
-    vector_t<T, length>& vector_t<T, length>::operator+(const vector_t& v){
+    vector_t<T, length>& vector_t<T, length>::operator+(const vector_t& v)const{
         vector_t<T, length>* temp = new vector_t<T, length>();
         if(this->__length == v.size()){
             for(int i = 0; i < length; ++i){
@@ -110,8 +143,9 @@ namespace matrix{
         return *temp;
     }
 
+    //VECTOR SUBTRACTION
     template<typename T, int length>
-    vector_t<T, length>& vector_t<T, length>::operator-(const vector_t& v){
+    vector_t<T, length>& vector_t<T, length>::operator-(const vector_t& v)const{
         vector_t<T, length>* temp = new vector_t<T, length>();
         if(this->__length == v.size()){
             for(int i = 0; i < length; ++i){
@@ -121,6 +155,27 @@ namespace matrix{
         return *temp;
     }
 
+    //VECTOR ADDITION
+    template<typename T, int length>
+    vector_t<T, length>& vector_t<T, length>::operator+(const T& num)const{
+        vector_t<T, length>* temp = new vector_t<T, length>();
+        for(int i = 0; i < length; ++i){
+            (*temp)[i] = this->__arr[i] + num;
+        }
+        return *temp;
+    }
+
+    //VECTOR SUBTRACTION
+    template<typename T, int length>
+    vector_t<T, length>& vector_t<T, length>::operator-(const T& num)const{
+        vector_t<T, length>* temp = new vector_t<T, length>();
+        for(int i = 0; i < length; ++i){
+            (*temp)[i] = this->__arr[i] - num;
+        }
+        return *temp;
+    }
+
+    //DOT PRODUCT OPERATOR
     template<typename T, int length>
     T& vector_t<T, length>::operator*(const vector_t& v)const{
         T *temp = new T;
@@ -133,6 +188,19 @@ namespace matrix{
     }
 };
 
+//VECTOR ADDITION
+template<typename T, int length>
+matrix::vector_t<T, length>& operator +(const T& num, const matrix::vector_t<T, length>& vector){
+    return vector + num;
+}
+
+//VECTOR SUBTRACTION
+template<typename T, int length>
+matrix::vector_t<T, length>& operator -(const T& num, const matrix::vector_t<T, length>& vector){
+    return vector - num;
+}
+
+//COUT OVERLOAD
 template<typename T, int length>
 std::ostream& operator << (std::ostream& out, const matrix::vector_t<T, length>& vector){
     out << "{";

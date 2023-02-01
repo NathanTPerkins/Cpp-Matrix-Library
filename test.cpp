@@ -16,8 +16,9 @@ int main(){
     // //    std::cout << test2 <<std::endl;
 
     // int a[3] = {1,2,3};
-    matrix::matrix2d_t<int, 3, 4> mat;
-    std::cout << mat << std::endl;
+    const int test = 3;
+    matrix::vector_t<int, 3> mat;
+    std::cout << 10 + mat << std::endl;
 
 
     return 0;
