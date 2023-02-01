@@ -49,9 +49,10 @@ namespace matrix{
     matrix2d_t<T, h, w>::matrix2d_t(matrix2d_t& m){
         if(m.size() == this->__height){
             if(m[0].size() == this->__width){
-                for(int i = 0; i < h; ++i){
-                    this->__arr[i] = m[i];
-                }
+                this->__width = w;
+                this->__height = h;
+                this->__size = w * h;
+                this->__arr = new vector_t<T, w>[h];
             }
         }
     }

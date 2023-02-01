@@ -37,15 +37,14 @@ namespace matrix{
 
     template<typename T, int length>
     vector_t<T, length>::vector_t(){
-        std::cout << "THis is vector" << std::endl;
         this->__length = length;
-        this->__arr = (T*)malloc(sizeof(T) * length);
+        this->__arr = new T[length];
     }
 
     template<typename T, int length>
     vector_t<T, length>::vector_t(T* v){
         this->__length = length;
-        this->__arr = (T*)malloc(sizeof(*v) * length);
+        this->__arr = new T[length];
         for(int i = 0; i < length; i++){
             this->__arr[i] = v[i];
         }
@@ -53,13 +52,16 @@ namespace matrix{
 
     template<typename T, int length>
     vector_t<T, length>::~vector_t(){
-        free(this->__arr);
+        delete[] this->__arr;
     }
 
     template<typename T, int length>
     vector_t<T, length>::vector_t(const vector_t& v){
-        this->__arr = v.__arr;
-        this->__length = v.__length;
+        this->__length = length;
+        this->__arr = new T[length];
+        for(int i = 0; i < length; ++i){
+            this->__arr[i] = v[i];
+        }
     }
 
     template<typename T, int length>
