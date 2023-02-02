@@ -137,7 +137,10 @@ namespace matrix{
     //ASSIGNMENT OPERATOR
     template<typename T, int length>
     void vector_t<T, length>::operator=(const vector_t& v){
-        this->__arr = v.__arr;
+        this->__arr = new T[length];
+        for(int i = 0; i < length; ++i){
+            this->__arr[i] = v[i];
+        }
         this->__length = v.__length;
     }
 
@@ -201,13 +204,21 @@ namespace matrix{
 //VECTOR ADDITION
 template<typename T, int length>
 matrix::vector_t<T, length>& operator +(const T& num, const matrix::vector_t<T, length>& vector){
-    return vector + num;
+    matrix::vector_t<T, length>* temp = new matrix::vector_t<T, length>();
+    for(int i = 0; i < length; ++i){
+        (*temp)[i] = num + vector[i];
+    }
+    return *temp;
 }
 
 //VECTOR SUBTRACTION
 template<typename T, int length>
 matrix::vector_t<T, length>& operator -(const T& num, const matrix::vector_t<T, length>& vector){
-    return vector - num;
+    matrix::vector_t<T, length>* temp = new matrix::vector_t<T, length>();
+    for(int i = 0; i < length; ++i){
+        (*temp)[i] = num - vector[i];
+    }
+    return *temp;
 }
 
 //COUT OVERLOAD

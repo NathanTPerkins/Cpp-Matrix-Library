@@ -126,7 +126,50 @@ namespace matrix{
         this->__size = m.__size;
         this->__width = m.__width;
         this->__height = m.__height;
-        this->__arr = m.__arr;
+        this->__arr = new vector_t<T, w>[h];
+        for(int i = 0; i < h; ++i){
+            this->__arr[i] = m[i];
+        }
+    }
+
+    //MATRIX ADDITION
+    template<typename T, int h, int w>
+    matrix2d_t<T, h, w>& matrix2d_t<T, h, w>::operator+(const matrix2d_t<T, h, w>& m){
+        matrix2d_t<T, h, w>* temp = new matrix2d_t();
+        for(int i = 0; i < h; ++i){
+            (*temp)[i] = this->__arr[i] + m[i];
+        }
+        return *temp;
+    }
+
+    //MATRIX ADDITION
+    template<typename T, int h, int w>
+    matrix2d_t<T, h, w>& matrix2d_t<T, h, w>::operator+(const T& num){
+        matrix2d_t<T, h, w>* temp = new matrix2d_t();
+        for(int i = 0; i < h; ++i){
+            (*temp)[i] = this->__arr[i] + num;
+        }
+        return *temp;
+    }
+
+    //MATRIX SUBTRACTION
+    template<typename T, int h, int w>
+    matrix2d_t<T, h, w>& matrix2d_t<T, h, w>::operator-(const matrix2d_t<T, h, w>& m){
+        matrix2d_t<T, h, w>* temp = new matrix2d_t();
+        for(int i = 0; i < h; ++i){
+            (*temp)[i] = this->__arr[i] - m[i];
+        }
+        return *temp;
+    }
+
+    //MATRIX SUBTRACTION
+    template<typename T, int h, int w>
+    matrix2d_t<T, h, w>& matrix2d_t<T, h, w>::operator-(const T& num){
+        matrix2d_t<T, h, w>* temp = new matrix2d_t();
+        for(int i = 0; i < h; ++i){
+            (*temp)[i] = this->__arr[i] - num;
+        }
+        return *temp;
     }
 
 

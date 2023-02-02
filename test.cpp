@@ -19,19 +19,17 @@ int main(){
     using matrix::vector_t;
     using matrix::matrix2d_t;
 
-    vector_t<int, 3> v1(9);
-    vector_t<int, 3> v2;
+    vector_t<int, 3> v1(-1);
+    vector_t<int, 3> v2(1);
 
-    // v1 = v2;
+    // v2 = v1;
 
-    std::cout << v1 << v2 << std::endl;
+    std::cout << -1 - v2 << std::endl;
 
-    matrix2d_t<int, 3, 3> m1(1);
-    matrix2d_t<int, 3,3> m2;
+    // matrix2d_t<int, 3, 3> m1(1);
+    // matrix2d_t<int, 3,3> m2(1);
 
-    // m2 = m1;
-
-    std::cout << m1 << m2 << std::endl;
+    // std::cout << m1 - 10<< std::endl;
 
     // matrix2d_t<int, 3, 3> m1(4);
     // matrix2d_t<int,3,3> m2 = m1;
