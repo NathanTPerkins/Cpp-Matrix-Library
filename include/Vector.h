@@ -16,11 +16,12 @@ namespace matrix{
         vector_t(T*);
         ~vector_t();
         vector_t(const vector_t&);
-        vector_t(T&);
+        vector_t(const T&);
 
         int size()const;
         double mag() const;
-        void fill(T&);
+        void fill(const T&);
+        void fill(const T&&);
         T& dot(const vector_t&) const;
         // vector_t<T, length>& cross(const vector_t&) const; TODO
 
@@ -60,6 +61,7 @@ namespace matrix{
     template<typename T, int length>
     vector_t<T, length>::~vector_t(){
         delete[] this->__arr;
+        this->__arr = nullptr;
     }
 
     //COPY CONSTRUCTOR
@@ -74,7 +76,7 @@ namespace matrix{
 
     //FILL CONSTRUCTOR
     template<typename T, int length>
-    vector_t<T, length>::vector_t(T& num){
+    vector_t<T, length>::vector_t(const T& num){
         this->__length = length;
         this->__arr = new T[length];
         for(int i = 0; i < length; ++i){
@@ -100,7 +102,15 @@ namespace matrix{
 
     //FILL METHOD
     template<typename T, int length>
-    void vector_t<T, length>::fill(T& num){
+    void vector_t<T, length>::fill(const T& num){
+        for(int i = 0; i < length; ++i){
+            this->__arr[i] = num;
+        }
+    }
+
+    //FILL METHOD
+    template<typename T, int length>
+    void vector_t<T, length>::fill(const T&& num){
         for(int i = 0; i < length; ++i){
             this->__arr[i] = num;
         }

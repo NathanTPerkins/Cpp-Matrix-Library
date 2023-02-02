@@ -16,12 +16,17 @@ namespace matrix{
 
     public:
         matrix2d_t();
-        matrix2d_t(matrix2d_t&);
+        matrix2d_t(const matrix2d_t&);
         ~matrix2d_t();
+        matrix2d_t(const T&);
 
         int size()const;
+        int width()const;
+        int height()const;
+        int elements()const;
+        void fill(const T&);
 
-        matrix2d_t& operator = (const matrix2d_t&);
+        void operator = (const matrix2d_t&);
 
         matrix2d_t& operator+(const matrix2d_t&);
         matrix2d_t& operator+(const T&);
@@ -30,51 +35,105 @@ namespace matrix{
         matrix2d_t& operator-(const T&);
 
         vector_t<T, w>& operator[](const int&)const;
-    
-        // friend matrix2d_t& operator+(T&, matrix2d_t&);
-        // friend matrix2d_t& operator-(T&, matrix2d_t&);
 
     };
 
+    //DEFAULT CONSTRUCTOR
     template<typename T, int h, int w>
     matrix2d_t<T, h, w>::matrix2d_t(){
         this->__width = w;
         this->__height = h;
         this->__size = w * h;
         this->__arr = new vector_t<T, w>[h];
-        
     }
 
+    //COPY CONSTRUCTOR
     template<typename T, int h, int w>
-    matrix2d_t<T, h, w>::matrix2d_t(matrix2d_t& m){
+    matrix2d_t<T, h, w>::matrix2d_t(const matrix2d_t& m){
         if(m.size() == this->__height){
             if(m[0].size() == this->__width){
                 this->__width = w;
                 this->__height = h;
                 this->__size = w * h;
                 this->__arr = new vector_t<T, w>[h];
+                for(int i = 0; i < h; ++i){
+                    this->__arr[i] = m[i];
+                }
             }
         }
     }
 
+    //DESTRUCTOR
     template<typename T, int h, int w>
     matrix2d_t<T, h, w>::~matrix2d_t(){
         delete[] this->__arr;
+        this->__arr = nullptr;
     }
 
+    //FILL CONSTRUCTOR
+    template<typename T, int h, int w>
+    matrix2d_t<T, h, w>::matrix2d_t(const T& num){
+        this->__width = w;
+        this->__height = h;
+        this->__size = w * h;
+        this->__arr = new vector_t<T, w>[h];
+        for(int i = 0; i < h; ++i){
+            this->__arr[i].fill(num);
+        }
+    }
+
+    //SIZE METHOD
     template<typename T, int h, int w>
     int matrix2d_t<T, h, w>::size()const{
         return this->__height;
     }
 
+    //WIDTH GETTER
+    template<typename T, int h, int w>
+    int matrix2d_t<T, h, w>::width()const{
+        return this->__width;
+    }
+
+    //HEIGHT GETTER
+    template<typename T, int h, int w>
+    int matrix2d_t<T, h, w>::height()const{
+        return this->__height;
+    }
+
+    //ELEMENTS GETTER
+    template<typename T, int h, int w>
+    int matrix2d_t<T, h, w>::elements()const{
+        return this->__width * this->height;
+    }
+
+    //FILL METHOD
+    template<typename T, int h, int w>
+    void matrix2d_t<T, h, w>::fill(const T& num){
+        for(int i = 0; i < h; ++i){
+            this->__arr[i].fill(num);
+        }
+    }
+
+    //MATRIX INDEXING OPERATOR
     template<typename T, int h, int w>
     vector_t<T, w>& matrix2d_t<T, h, w>::operator[](const int & idx) const {
         return this->__arr[idx];
     }
 
+    //ASSIGNMENT OPERATOR
+    template<typename T, int h, int w>
+    void matrix2d_t<T, h, w>::operator=(const matrix2d_t& m){
+        this->__size = m.__size;
+        this->__width = m.__width;
+        this->__height = m.__height;
+        this->__arr = m.__arr;
+    }
+
 
 };
 
+
+//COUT OPERATOR OVERLOAD
 template<typename T, int h, int w>
 std::ostream& operator << (std::ostream& out, matrix::matrix2d_t<T,w,h>& m){
     out << "{";
