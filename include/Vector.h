@@ -36,6 +36,7 @@ namespace matrix{
         vector_t<T, length>& operator -(const T&)const;
         // vector_t<T, length>& operator /(const vector_t&); TODO
         T& operator *(const vector_t&)const;
+        vector_t<T, length>& operator *(const T&)const;
 
     };
 
@@ -199,6 +200,17 @@ namespace matrix{
         }
         return *temp;
     }
+
+
+    //VECTOR MULTIPLICATION WITH SCALAR
+    template<typename T, int length>
+    vector_t<T, length>& vector_t<T, length>::operator *(const T& num)const{
+        vector_t<T, length> *temp = new vector_t<T, length>();
+        for(int i = 0; i < length; ++i){
+            (*temp)[i] = this->__arr[i] * num;
+        }
+        return *temp;
+    }
 };
 
 //VECTOR ADDITION
@@ -217,6 +229,16 @@ matrix::vector_t<T, length>& operator -(const T& num, const matrix::vector_t<T, 
     matrix::vector_t<T, length>* temp = new matrix::vector_t<T, length>();
     for(int i = 0; i < length; ++i){
         (*temp)[i] = num - vector[i];
+    }
+    return *temp;
+}
+
+//VECTOR MULTIPLICATION WITH SCALAR
+template<typename T, int length>
+matrix::vector_t<T, length>& operator *(const T& num, const matrix::vector_t<T, length>& vector){
+    matrix::vector_t<T, length> *temp = new matrix::vector_t<T, length>();
+    for(int i = 0; i < length; ++i){
+        (*temp)[i] = vector[i] * num;
     }
     return *temp;
 }

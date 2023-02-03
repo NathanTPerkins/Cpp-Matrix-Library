@@ -34,6 +34,8 @@ namespace matrix{
         matrix2d_t& operator-(const matrix2d_t&);
         matrix2d_t& operator-(const T&);
 
+        matrix2d_t& operator*(const T&);
+
         vector_t<T, w>& operator[](const int&)const;
 
     };
@@ -172,8 +174,27 @@ namespace matrix{
         return *temp;
     }
 
+    //MATRIX MULTIPLICATION
+    // template<typename T, int h, int w>
+    // matrix2d_t<T, h, w>& matrix2d_t<T, h, w>::operator*(const T& num){
+    //     matrix2d_t<T, h, w> *temp = new matrix2d_t<T, h, w>();
+    //     for(int i = 0; i < h; ++i){
+    //         (*temp)[i] = this->__arr[i] * num;
+    //     }
+    //     return *temp;
+    // }
+
 
 };
+
+
+//MATRIX MULTIPLICATION
+// using matrix::matrix2d_t;
+// template<typename T, int h, int w>
+// matrix2d_t<T, h, w>& matrix2d_t<T, h, w>::operator*(const T& num, const matrix2d_t<T, h, w>& m){
+//     matrix2d_t<T, h, w>* temp = new matrix2d_t<T, h, w>();
+//     return *temp;
+// }
 
 
 //COUT OPERATOR OVERLOAD
