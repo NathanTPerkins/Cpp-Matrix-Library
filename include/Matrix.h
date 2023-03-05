@@ -17,7 +17,7 @@ namespace matrix{
     public:
         matrix2d_t();
         matrix2d_t(const matrix2d_t&);
-        ~matrix2d_t();
+        virtual ~matrix2d_t();
         matrix2d_t(const T&);
 
         int size()const;

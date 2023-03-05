@@ -14,7 +14,7 @@ namespace matrix{
     public:
         vector_t();
         vector_t(T*);
-        ~vector_t();
+        virtual ~vector_t();
         vector_t(const vector_t&);
         vector_t(const T&);
 
