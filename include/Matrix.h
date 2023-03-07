@@ -125,16 +125,14 @@ namespace matrix{
     //ASSIGNMENT OPERATOR
     template<typename T, int h, int w>
     matrix2d_t<T, h, w>& matrix2d_t<T, h, w>::operator=(const matrix2d_t& m){
-        matrix2d_t<T, m.__height, m.__width>& temp = new matrix2d_t<T, m.__height, m.__width>;
         this->__size = m.__size;
         this->__width = m.__width;
         this->__height = m.__height;
         this->__arr = new vector_t<T, m.__width>[m.__height];
         for(int i = 0; i < h; ++i){
-            (*temp)[i] = m[i];
             this->__arr[i] = m[i];
         }
-        return *temp;
+        return *this;
     }
 
     //MATRIX ADDITION

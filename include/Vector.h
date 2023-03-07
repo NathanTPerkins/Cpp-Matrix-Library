@@ -138,14 +138,12 @@ namespace matrix{
     //ASSIGNMENT OPERATOR
     template<typename T, int length>
     vector_t<T, length>& vector_t<T, length>::operator=(const vector_t& v){
-        vector_t<T, v.__length>* temp = new vector_t<T, v.__length>;
         this->__arr = new T[v.__length];
-        for(int i = 0; i < length; ++i){
-            (*temp)[i] = v[i];
+        this->__length = v.__length;
+        for(int i = 0; i < v.__length; ++i){
             this->__arr[i] = v[i];
         }
-        this->__length = v.__length;
-        return *temp;
+        return *this;
     }
 
     //VECTOR ADDITION
