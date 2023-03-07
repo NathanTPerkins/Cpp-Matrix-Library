@@ -29,7 +29,7 @@ namespace matrix{
 
         T& operator[](int& idx)const;
         T& operator[](int&& idx)const;
-        void operator=(const vector_t& v);
+        vector_t<T, length>& operator=(const vector_t& v);
         vector_t<T, length>& operator +(const vector_t&)const;
         vector_t<T, length>& operator -(const vector_t&)const;
         vector_t<T, length>& operator +(const T&)const;
@@ -137,12 +137,15 @@ namespace matrix{
 
     //ASSIGNMENT OPERATOR
     template<typename T, int length>
-    void vector_t<T, length>::operator=(const vector_t& v){
-        this->__arr = new T[length];
+    vector_t<T, length>& vector_t<T, length>::operator=(const vector_t& v){
+        vector_t<T, v.__length>* temp = new vector_t<T, v.__length>;
+        this->__arr = new T[v.__length];
         for(int i = 0; i < length; ++i){
+            (*temp)[i] = v[i];
             this->__arr[i] = v[i];
         }
         this->__length = v.__length;
+        return *temp;
     }
 
     //VECTOR ADDITION
