@@ -1,7 +1,9 @@
 #ifndef MATRIX_HPP
 #define MATRIX_HPP
 
+#ifdef COUT_OVERLOAD
 #include <iostream>
+#endif
 #include <Vector.h>
 
 namespace matrix{
@@ -197,7 +199,7 @@ namespace matrix{
 //     return *temp;
 // }
 
-
+#ifdef COUT_OVERLOAD
 //COUT OPERATOR OVERLOAD
 template<typename T, int h, int w>
 std::ostream& operator << (std::ostream& out, matrix::matrix2d_t<T,w,h>& m){
@@ -211,6 +213,7 @@ std::ostream& operator << (std::ostream& out, matrix::matrix2d_t<T,w,h>& m){
     return out;
 
 }
+#endif
 
 
 

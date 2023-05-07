@@ -1,7 +1,12 @@
 #ifndef VECTOR_H
 #define VECTOR_H
 
+// #define COUT_OVERLOAD
+
+#ifdef COUT_OVERLOAD
 #include <iostream>
+#endif
+
 #include <math.h>
 
 namespace matrix{
@@ -244,6 +249,7 @@ matrix::vector_t<T, length>& operator *(const T& num, const matrix::vector_t<T, 
     return *temp;
 }
 
+#ifdef COUT_OVERLOAD
 //COUT OVERLOAD
 template<typename T, int length>
 std::ostream& operator << (std::ostream& out, const matrix::vector_t<T, length>& vector){
@@ -254,5 +260,6 @@ std::ostream& operator << (std::ostream& out, const matrix::vector_t<T, length>&
     out << vector[vector.size() - 1] << "}";
     return out;
 }
+#endif
 
 #endif

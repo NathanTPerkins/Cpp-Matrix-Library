@@ -1,2 +1,6 @@
 library.json
 test.cpp
+test
+test.o
+Makefile
+
