@@ -24,7 +24,7 @@ int main(){
 
     // v2 = v1;
 
-    std::cout << 10 * v2 << std::endl;
+    // std::cout << 10 * v2 << std::endl;
 
     // matrix2d_t<int, 3, 3> m1(1);
     // matrix2d_t<int, 3,3> m2(2);
