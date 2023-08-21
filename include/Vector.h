@@ -11,7 +11,7 @@
 
 namespace matrix{
     template<typename T, int length>
-    class vector_t{
+    class vector_t final {
     private:
         T *__arr;
         int __length;
@@ -28,7 +28,7 @@ namespace matrix{
         void fill(const T&);
         void fill(const T&&);
         T& dot(const vector_t&) const;
-        // vector_t<T, length>& cross(const vector_t&) const; TODO
+        vector_t<T, length>& cross(const vector_t&) const;
 
 
 
@@ -39,7 +39,7 @@ namespace matrix{
         vector_t<T, length>& operator -(const vector_t&)const;
         vector_t<T, length>& operator +(const T&)const;
         vector_t<T, length>& operator -(const T&)const;
-        // vector_t<T, length>& operator /(const vector_t&); TODO
+        vector_t<T, length>& operator /(const vector_t&);
         T& operator *(const vector_t&)const;
         vector_t<T, length>& operator *(const T&)const;
 
@@ -128,6 +128,12 @@ namespace matrix{
         return (*this) * v;
     }
 
+    //CROSS PRODUCT FUNCTION
+    template<typename T, int length>
+    vector_t<T, length>& vector_t<T, length>::cross(const vector_t& v)const{
+        return (*this) / v;
+    }
+
     //LVALUE ARRAY INDEX OPERATOR
     template<typename T, int length>
     T& vector_t<T, length>::operator[](int& idx)const{
@@ -206,6 +212,21 @@ namespace matrix{
         }
         return *temp;
     }
+
+    //CROSS PRODUCT OPERATOR
+    template<typename T, int length>
+    vector_t<T, length>& vector_t<T, length>::operator/(const vector_t& v){
+        vector_t<T, length> * temp = new vector_t(-1);
+        if(length != 3){
+            return *temp;
+        }
+
+        (*temp)[0] = this->__arr[1] * v[2] - this->__arr[2] * v[1];
+        (*temp)[1] = this->__arr[2] * v[0] - this->__arr[0] * v[2];
+        (*temp)[2] = this->__arr[0] * v[1] - this->__arr[1] * v[0];
+        return *temp;
+    }
+    
 
 
     //VECTOR MULTIPLICATION WITH SCALAR

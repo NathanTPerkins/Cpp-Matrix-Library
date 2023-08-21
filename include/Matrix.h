@@ -4,12 +4,12 @@
 #ifdef COUT_OVERLOAD
 #include <iostream>
 #endif
-#include <Vector.h>
+#include "Vector.h"
 
 namespace matrix{
 
     template <typename T, int h, int w>
-    class matrix2d_t {
+    class matrix2d_t final {
     private:
         vector_t<T, w>* __arr;
         int __size;
@@ -37,6 +37,8 @@ namespace matrix{
         matrix2d_t& operator-(const T&);
 
         matrix2d_t& operator*(const T&);
+
+        matrix2d_t& operator*(const matrix2d_t&);
 
         vector_t<T, w>& operator[](const int&)const;
 
@@ -178,24 +180,41 @@ namespace matrix{
     }
 
     //MATRIX MULTIPLICATION
-    // template<typename T, int h, int w>
-    // matrix2d_t<T, h, w>& matrix2d_t<T, h, w>::operator*(const T& num){
-    //     matrix2d_t<T, h, w> *temp = new matrix2d_t<T, h, w>();
-    //     for(int i = 0; i < h; ++i){
-    //         (*temp)[i] = this->__arr[i] * num;
-    //     }
-    //     return *temp;
-    // }
+    template<typename T, int h, int w>
+    matrix2d_t<T, h, w>& matrix2d_t<T, h, w>::operator*(const T& num){
+        matrix2d_t<T, h, w> *temp = new matrix2d_t<T, h, w>();
+        for(int i = 0; i < h; ++i){
+            (*temp)[i] = this->__arr[i] * num;
+        }
+        return *temp;
+    }
+
+    //MATRIX MULTUPLICATION
+    template<typename T, int h, int w>
+    matrix2d_t<T, h, w>& matrix2d_t<T, h, w>::operator*(const matrix2d_t<T, h, w>& m){
+        matrix2d_t<T, h, m.width()>* temp = new matrix2d_t<T, h, m.width()>();
+        for(int i = 0; i < h; ++i){
+            for(int j = 0; j < m.width(); ++j){
+                for(int k = 0; k < h; ++k){
+                    (*temp)[i][j] += (*this)[i][k] * m[k][j];
+                }
+            }
+        }
+        return *temp;
+    }
 
 
 };
 
 
-//MATRIX MULTIPLICATION
+// //MATRIX MULTIPLICATION
 // using matrix::matrix2d_t;
 // template<typename T, int h, int w>
-// matrix2d_t<T, h, w>& matrix2d_t<T, h, w>::operator*(const T& num, const matrix2d_t<T, h, w>& m){
-//     matrix2d_t<T, h, w>* temp = new matrix2d_t<T, h, w>();
+// matrix2d_t<T, h, w>& operator*(const T& num, const matrix2d_t<T, h, w>& m){
+//     matrix2d_t<T, h, w> *temp = new matrix2d_t<T, h, w>();
+//     for(int i = 0; i < h; ++i){
+//         (*temp)[i] = m[i] * num;
+//     }
 //     return *temp;
 // }
 
