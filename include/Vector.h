@@ -66,8 +66,10 @@ namespace matrix{
     //DESTRUCTOR
     template<typename T, int length>
     vector_t<T, length>::~vector_t(){
-        delete[] this->__arr;
-        this->__arr = nullptr;
+        if(this->__arr != nullptr){
+            delete[] this->__arr;
+            this->__arr = nullptr;
+        }
     }
 
     //COPY CONSTRUCTOR
@@ -149,6 +151,9 @@ namespace matrix{
     //ASSIGNMENT OPERATOR
     template<typename T, int length>
     vector_t<T, length>& vector_t<T, length>::operator=(const vector_t& v){
+        if(this->__arr != nullptr){
+            delete [] this->__arr;
+        }
         this->__arr = new T[v.__length];
         this->__length = v.__length;
         for(int i = 0; i < v.__length; ++i){
